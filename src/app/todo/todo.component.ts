@@ -7,31 +7,38 @@ import { Model } from './model';
   styleUrls: ['./todo.component.css'],
 })
 export class TodoComponent {
-  message = 'merhaba';
+
+  displayAll: boolean=false;
 
   constructor() {}
 
   model = new Model();
 
-  // addItem(txtItem: any) {
-  //   console.log(txtItem.value);
-  // }
 
   addItem(value: string) {
-
-    if(value!=""){
-    this.model.items.push({ description: value, action: "no"});
-  } else {
-    alert("bilgi eksik")
-
+    if (value != '') {
+      this.model.items.push({ description: value, action: false });
+    } else {
+      alert('bilgi eksik');
+    }
   }
-}
 
   getName() {
     return this.model.name;
   }
 
   getItems() {
-    return this.model.items;
+    if(this.displayAll){
+      return this.model.items;
+
+    }
+
+    return this.model.items.filter(item => !item.action);
+    
+  }
+
+  displayCount() {
+    return this.model.items.filter(i=>i.action).length;
+
   }
 }
